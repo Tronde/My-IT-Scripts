@@ -1,4 +1,4 @@
 Schriftrolle
 ============
 
-Kleine Scriptsammlung
+Kleine Scriptsammlung meiner Bash-Schnipsel.
