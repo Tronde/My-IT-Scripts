@@ -13,12 +13,14 @@ chdir $FindBin::Bin;
 
 my $datei = 'notizblock.txt';
 
+# open my $FH, '>', 'notizblock.txt'; # Befehl 'open'; Parameter 'my $FH' -> File Handle; '>' -> Schreibmodus; 'notizblock.txt' -> Dateiname.
 open my $FH, '>>', $datei unless -e $datei;
 open $FH, '+<', $datei;
-say <$FH>;
 # @notiz = <$FH>; # <>-Operator liest eine Zeile aus dem Handle $FH. Statt <> kann auch readline $FH genutzt werden.
-print "Neue Notiz: ";
+my @notiz = <$FH>;
+for my $nr (0 .. $#notiz)
+	{ print "[$nr]", $notiz[$nr] }
+print "Neue Notiz (nur ENTER wenn keine): ";
 my $notiz = <STDIN>;
-# open my $FH, '>', 'notizblock.txt'; # Befehl 'open'; Parameter 'my $FH' -> File Handle; '>' -> Schreibmodus; 'notizblock.txt' -> Dateiname.
-print $FH $notiz; # Inhalt von $notiz wird an das File Handle übergeben und dadurch in die Datei notizblock.txt geschrieben.
+print $FH $notiz if $notiz ne "\n";
 close $FH; # File Handle wird geschlossen und die Datei notizblock.txt freigegeben.
