@@ -7,20 +7,34 @@
 use v5.18; # Verwende alle neuen Features aus Perl 5.18.
 use strict; # Hilft Tippfehler zu finden. ;-)
 use warnings; # Gibt ausführlichere Fehlermeldungen aus.
-use diagnostics; # Gibt noch ausführliche Meldungen aus.
+# use diagnostics; # Gibt noch ausführliche Meldungen aus.
 use FindBin;
 use File::Slurp;
 
 chdir $FindBin::Bin;
 
 my $datei = 'notizblock.txt';
+my %kommando = ( bewege => 'm', loesche => 'd');
 
-# open my $FH, '>', 'notizblock.txt'; # Befehl 'open'; Parameter 'my $FH' -> File Handle; '>' -> Schreibmodus; 'notizblock.txt' -> Dateiname.
 append_file($datei) unless -e $datei;
 my @notizen = read_file($datei);
 # @notiz = <$FH>; # <>-Operator liest eine Zeile aus dem Handle $FH. Statt <> kann auch readline $FH genutzt werden.
 for my $nr (0 .. $#notizen)
 	{ print "[$nr] ", $notizen[$nr] }
-print "Neue Notiz (nur ENTER wenn keine): ";
+print "Neue Notiz (ENTER, wenn keine; $kommando{'loesche'} loescht; $kommando{'bewege'} verschiebt): ";
 my $notiz = <STDIN>;
-append_file($datei, $notiz) if $notiz ne "\n";
+given ( lc substr($notiz, 0, 1) ) {
+	when ("\n") { }
+	when (" ") {append_file($datei, $notiz) }
+	when ($kommando{'loesche'}) {
+		continue if length($notiz) == 2;
+		my $nr = int substr($notiz, 1);
+		splice(@notizen, $nr, 1) if $nr >= 0 and $nr <= $#notizen;
+		write_file($datei, @notizen);
+	}
+	when ($kommando{'bewege'}) {
+		continue if length($notiz) == length($kommando{'bewege'})+1;
+		my($von, $zu) = split ':',
+			substr($notiz, length($kommando{'bewege'}));
+	}
+}
