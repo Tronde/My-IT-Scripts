@@ -36,5 +36,10 @@ given ( lc substr($notiz, 0, 1) ) {
 		continue if length($notiz) == length($kommando{'bewege'})+1;
 		my($von, $zu) = split ':',
 			substr($notiz, length($kommando{'bewege'}));
+		$von = int $von;
+		$zu = int $zu;
+		continue if $zu < 0 or $zu > $#notizen;
+		splice(@notizen, $zu, 0, splice(@notizen, $von, 1));
+		write_file($datei, @notizen);
 	}
 }
