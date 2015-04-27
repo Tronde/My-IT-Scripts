@@ -13,37 +13,45 @@ chdir $FindBin::Bin;
 
 my $datei = 'hosts.txt';
 my %kommando = ( verbinden => 'v', eintragen => 'n', bewege => 'm', loesche => 'd', beenden => 'e' );
+my $domain = 'ad.uni-bielefeld.de';
+my $keyboard_layout = 'de';
+my $cmd = 'rdesktop -d $domain -k $keyboard_layout -0 $host';
 
 append_file($datei) unless -e $datei;
-my @notizen = read_file($datei);
-my @sorted_notizen = @notizen;
-for my $nr (0 .. $#sorted_notizen)
-	{ print "[$nr] ", $sorted_notizen[$nr] }
+my @hosts = read_file($datei);
+my @sorted_hosts = sort @hosts;
+for my $nr (0 .. $#sorted_hosts)
+	{ print "[$nr] ", $sorted_hosts[$nr] }
 print "Was moechtest du tun? ($kommando{'eintragen'} Neuer Eintrag; $kommando{'verbinden'} Verbindung zu Host; $kommando{'loesche'} loescht Eintrag; $kommando{'bewege'} verschiebt Eintrag); $kommando{'beenden'} Exit: ";
-my $notiz = <STDIN>;
-if ( lc substr($notiz, 0, 1) eq $kommando{'verbinden'}) { }
-elsif (lc substr($notiz, 0, 1) eq $kommando{'beenden'}) { }
-elsif (lc substr($notiz, 0, 1) eq $kommando{'eintragen'}) {
-	print "Gib den FQDN ein: ";
-	$notiz = <STDIN>;
-	append_file($datei, $notiz);
-	} 
-elsif (lc substr($notiz, 0, 1) eq $kommando{'loesche'}) {
-		continue if length($notiz) == 2;
-		my $nr = int substr($notiz, 1);
-		splice(@notizen, $nr, 1) if $nr >= 0 and $nr <= $#notizen;
-		write_file($datei, @notizen);
+my $input = <STDIN>;
+if ( lc substr($input, 0, 1) eq $kommando{'verbinden'}) {
+		continue if length($input) == 2;
+		my $host = int substr($input, 1);
+		system($cmd);
 	}
-elsif ($lc substr($notiz, 0, 1) eq kommando{'bewege'}) {
-		continue if length($notiz) == length($kommando{'bewege'})+1;
+elsif (lc substr($input, 0, 1) eq $kommando{'beenden'}) { }
+elsif (lc substr($input, 0, 1) eq $kommando{'eintragen'}) {
+	print "Gib den FQDN ein: ";
+	$input = <STDIN>;
+	append_file($datei, $input);
+	} 
+elsif (lc substr($input, 0, 1) eq $kommando{'loesche'}) {
+		continue if length($input) == 2;
+		my $nr = int substr($input, 1);
+		splice(@sorted_hosts, $nr, 1) if $nr >= 0 and $nr <= $#sorted_hosts;
+		write_file($datei, @sorted_hosts);
+	}
+elsif (lc substr($input, 0, 1) eq kommando{'bewege'}) {
+		continue if length($input) == length($kommando{'bewege'})+1;
 		my($von, $zu) = split ':',
-			substr($notiz, length($kommando{'bewege'}));
+			substr($input, length($kommando{'bewege'}));
 		$von = int $von;
                  $zu = int $zu;
-                 continue if $zu < 0 or $zu > $#notizen;
-                 splice(@notizen, $zu, 0, splice(@notizen, $von, 1));
-                 write_file($datei, @notizen);
+                 continue if $zu < 0 or $zu > $#sorted_hosts;
+                 splice(@sorted_hosts, $zu, 0, splice(@sorted_hosts, $von, 1));
+                 write_file($datei, @sorted_hosts);
 	}
 else {
-	say "Hier wird mal ein Hilfe-Text stehen.";
+	my $text="Hier wird mal ein Hilfe-Text stehen.";
+	say $text;
 }
