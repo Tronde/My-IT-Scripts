@@ -12,7 +12,28 @@
 import sys, argparse, csv
 
 """
+ Funktionen
+"""
+
+def clientmodus():
+    print "Das Pogramm befindet sich im Clientmodus."
+
+def servermodus():
+    print "Das Pogramm befindet sich im Servermodus."
+
+"""
  Erstellung des Parsers und Definition der Argumente
 """
 
 parser = argparse.ArgumentParser(description=" Breitband-Test.py")
+parser.add_argument("-s", "--server", dest="progmodus", action='store_true', default='False', help="Startet das Programm im Servermodus.")
+
+args = parser.parse_args()
+
+progmodus = args.progmodus
+print progmodus
+
+if progmodus == True:
+    servermodus()
+else:
+    clientmodus()
