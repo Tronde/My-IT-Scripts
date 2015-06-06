@@ -9,7 +9,7 @@
  Copyright 2015 by Jörg Kastning <joerg.kastning@my-it-brain.de>
 """
 
-import argparse,subprocess, csv
+import argparse, subprocess, csv
 
 """
  Funktionen
@@ -22,7 +22,18 @@ def icmp(host):
 
 def clientmodus():
     print "Das Pogramm befindet sich im Clientmodus."
+    print "Ausgabe der ICMP-Requests:"
     print(icmp(host))
+    
+    f = open('workfile', 'a')
+    f.write(icmp(host))
+    f.close()
+    f = open('workfile', 'r')
+    #output = f.readlines()
+    print "Ausgabe der Datei:"
+    for line in f.readlines():
+        print(line)
+    f.close()
 
 def servermodus():
     print "Das Pogramm befindet sich im Servermodus."
