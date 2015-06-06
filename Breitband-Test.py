@@ -9,14 +9,20 @@
  Copyright 2015 by Jörg Kastning <joerg.kastning@my-it-brain.de>
 """
 
-import sys, argparse, csv
+import argparse,subprocess, csv
 
 """
  Funktionen
 """
 
+def icmp(host):
+    """ Diese Prozedur sendet einige ICMP-Pakete an einen Host. """
+    ping_result = subprocess.check_output(["ping", "-c 4", host])
+    return ping_result
+
 def clientmodus():
     print "Das Pogramm befindet sich im Clientmodus."
+    print(icmp(host))
 
 def servermodus():
     print "Das Pogramm befindet sich im Servermodus."
@@ -26,12 +32,17 @@ def servermodus():
 """
 
 parser = argparse.ArgumentParser(description=" Breitband-Test.py")
-parser.add_argument("-s", "--server", dest="progmodus", action='store_true', default='False', help="Startet das Programm im Servermodus.")
+parser.add_argument("-S", "--Server", dest="progmodus", action='store_true', default='False', help="Startet das Programm im Servermodus.")
+parser.add_argument("-P", "--Port", dest="port", default=500001, help="Port auf dem der Server hört bzw. zu dem sich der Client verbindet.")
+parser.add_argument("-C", dest="icmp_count", default=10, help="Anzahl ICMP-Pakete, welche an den Server gesendet werden.")
+parser.add_argument("-H", "--Host", dest="Host", required=False, help="IP-Adresse an welche der Server-Socket gebunden wird bzw. zu dem sich der Client verbindet.")
 
 args = parser.parse_args()
 
 progmodus = args.progmodus
-print progmodus
+port = args.port
+icmp_count = args.icmp_count
+host = args.Host
 
 if progmodus == True:
     servermodus()
