@@ -1,0 +1,4 @@
+ Die Nummerierung beginnt bei 0.
+ Notiz Nummer 2.
+ Das Leben ist schoen.
+ Diese Notiz soll nach oben verschoben werden.
