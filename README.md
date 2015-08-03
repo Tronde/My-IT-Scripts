@@ -1,4 +1,4 @@
-Schriftrolle
-============
+My-IT-Scripts
+=============
 
-Kleine Scriptsammlung meiner Bash-Schnipsel.
+Kleine Sammlung meiner Script-Schnipsel.
