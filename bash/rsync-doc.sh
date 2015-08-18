@@ -21,12 +21,12 @@ RSYNCCONF=(-az --delete-delay)
 
 do_mount()
 	{
-		mount -o credentials=$CREDENTIALS,ro,uid=$UID,gid=$GID -t cifs $SMB_SOURCE $MOUNTPOINT
+		mount -o credentials=$CREDENTIALS,ro -t cifs $SMB_SOURCE $MOUNTPOINT
 	}
 
 do_rsync()
 	{
-		for SOURCE in $SOURCES; do
+		for SOURCE in "${SOURCES[@]}"; do
 			rsync $RSYNCCONF $MOUNTPOINT$SOURCE $TARGET
 		done
 	}
