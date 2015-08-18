@@ -2,7 +2,7 @@
 # Name: rsync-doc.sh
 # Author: Joerg Kastning
 # License: GPLv3
-# URL: 
+# URL: https://github.com/Tronde/My-IT-Scripts/blob/master/bash/rsync-doc.sh
 #
 # This script synchronize remote directorys with a directory on the local host.
 # It was build to enable almost everyone to add new directories to the script,
