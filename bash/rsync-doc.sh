@@ -27,7 +27,7 @@ do_mount()
 do_rsync()
 	{
 		for SOURCE in "${SOURCES[@]}"; do
-			rsync $RSYNCCONF $MOUNTPOINT$SOURCE $TARGET
+			rsync "${RSYNCCONF[@]}" $MOUNTPOINT$SOURCE $TARGET
 		done
 	}
 
