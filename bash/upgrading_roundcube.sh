@@ -9,7 +9,7 @@
 INSTALL_PATH=" " # Pfad zur Roundcube-Installation
 RC_DB_NAME=" "
 PACKAGE_URL=" " # Download-URL der akutellen Roundcube-Version
-MYSQL_ROOT_USER= " "
+MYSQL_ROOT_USER=" "
 
 # Funktionen
 check()
