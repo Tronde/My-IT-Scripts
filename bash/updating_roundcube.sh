@@ -2,7 +2,7 @@
 #
 # Beschreibung: Skript zur Aktualisierung von Roundcube
 # Autor: Tronde (E-Mail-Adresse: tronde(at)my-it-brain(Punkt)de)
-# Datum: 2016-01-03
+# Datum: 2016-02-23
 # Lizenz: GPLv3
 
 # Variablen
