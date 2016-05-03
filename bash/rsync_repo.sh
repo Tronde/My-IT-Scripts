@@ -79,7 +79,7 @@ fi
 
 if [[ ! -z $PACKAGELIST_PATH ]]; then
   echo \# `date +%Y-%m-%d` - START RSYNC \# > $LOG
-  do_sync_pkg
+  do_sync_pkg >> $LOG
   check $? >> $LOG
   echo \# `date +%Y-%m-%d` - END RSYNC \# >> $LOG
 else
