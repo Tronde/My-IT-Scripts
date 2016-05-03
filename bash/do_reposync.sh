@@ -5,7 +5,7 @@
 # Autor: Joerg Kastning <joerg(Punkt)kastning(aet)uni-bielefeld.de>
 
 LOG="/var/log/do_reposync.log"
-REPOID=" "
+REPOID=( )
 DOWNLOADPATH=" "
 
 echo \# `date +%Y-%m-%d` - START REPOSYNC \# > $LOG
