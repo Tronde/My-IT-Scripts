@@ -14,7 +14,11 @@ for REPO in "${REPOID[@]}"
   do
     reposync --gpgcheck -l --repoid=$REPO --download_path=/var/www/html/$DOWNLOADPATH --downloadcomps --download-metadata -n >> $LOG
     cd /var/www/html/$DOWNLOADPATH/$REPO
-    createrepo -v /var/www/html/$DOWNLOADPATH/$REPO -g comps.xml >> $LOG
+    if [[ -e comps.xml ]]; then
+      createrepo -v /var/www/html/$DOWNLOADPATH/$REPO -g comps.xml >> $LOG
+    else
+      createrepo -v /var/www/html/$DOWNLOADPATH/$REPO >> $LOG
+    fi
 done
 
 echo \# `date +%Y-%m-%d` - END REPOSYNC \# >> $LOG
