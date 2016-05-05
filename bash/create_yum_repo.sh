@@ -1,12 +1,11 @@
 #!/bin/bash
 #
 # Beschreibung: Skript zur Anlage eigener YUM-Repositories
-# Autor: Joerg Kastning <joerg.kastning@uni-bielefel.de>
+# Autor: Joerg Kastning <joerg(PUNKT)kastning(AET)uni-bielefeldde>
 
 # Variablen ###################################################################
-HOST="http://rpm-repo.hrz.uni-bielefeld.de" # Adresse lokaler Spiegelserver
-BASEDIR="/var/www/html/local-rhel-7-repo/"
-#BASEDIR="/home/joerg/"
+HOST="http://<FQDN>" # Adresse des Servers, welcher das Repository hostet.
+BASEDIR="/var/www/html/<VERZEICHNISNAME>/"
 REPONAME=""
 LOG="/var/log/create_yum_repo.log"
 
@@ -16,7 +15,7 @@ usage()
   cat << EOF
   usage: $0 OPTIONS
   Dieses Skript legt ein neues YUM-Repository
-  auf dem  Spiegelserver an.
+  auf dem lokalen Server an.
 
   OPTIONS:
   -h Zeigt den Hilfetext an
@@ -43,7 +42,7 @@ REPOID=`echo $REPONAME | tr "[a-z]" "[A-Z]"`
 cat >> $BASEDIR/hrz.repo << EOF
 [$REPOID]
 name= RHEL \$releasever - \$basearch (local)
-baseurl=$HOST/local-rhel-7-repo/$REPONAME/
+baseurl=$HOST/`basename $BASEDIR`/$REPONAME/
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
