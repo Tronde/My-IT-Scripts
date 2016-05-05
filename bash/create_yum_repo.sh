@@ -16,6 +16,10 @@ usage()
   usage: $0 OPTIONS
   Dieses Skript legt ein neues YUM-Repository
   auf dem lokalen Server an.
+  
+  Vor dem ersten Lauf müssen die Variablen BASEDIR und HOST definiert werden.
+  Die Variable REPONAME kann entweder im Skript definiert werden, oder als
+  Parameter beim Aufruf des Skripts mit übergeben werden.
 
   OPTIONS:
   -h Zeigt den Hilfetext an
