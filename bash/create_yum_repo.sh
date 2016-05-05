@@ -43,7 +43,7 @@ mkdir $BASEDIR$REPONAME
 createrepo --database $BASEDIR$REPONAME 
 REPOID=`echo $REPONAME | tr "[a-z]" "[A-Z]"`
 
-cat >> $BASEDIR/hrz.repo << EOF
+cat >> $BASEDIR/$REPONAME.repo << EOF
 [$REPOID]
 name= RHEL \$releasever - \$basearch (local)
 baseurl=$HOST/`basename $BASEDIR`/$REPONAME/
