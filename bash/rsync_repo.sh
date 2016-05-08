@@ -1,6 +1,6 @@
 #!/bin/bash
 # Sychronisation von zwei Paketquellen auf dem lokalen Spiegelserver
-# Autor: Joerg Kastning <joerg.kastning@uni-bielefeld.de>
+# Autor: Joerg Kastning <joerg.kastning(aet)uni-bielefeld(punkt)de>
 
 # Variablen ########################################################
 LOG="/var/log/rsync_repo.log"
@@ -15,6 +15,7 @@ usage()
   Paketquellen auf dem  Spiegelserver.
 
   OPTIONS:
+  -f Übergibt eine Datei mit zu synchronisierenden Paketen
   -h Zeigt den Hilfetext an
   -Q Gibt das zu synchronisierende Quellverzeichnis an
   -Z Gibt das Zielverzeichnis der Synchronisation an
@@ -41,10 +42,10 @@ do_sync_pkg()
 {
   while read line
   do
-     cp -al $QUELLE/$line $ZIEL
+     cp -al $line $ZIEL/Packages
   done < $PACKAGELIST_PATH
-  cd $ZIEL
-  createrepo -v --database $ZIEL
+  cd $ZIEL/Packages
+  createrepo -v --database $ZIEL/Packages
 }
 
 # Hauptteil #######################################################
@@ -69,7 +70,7 @@ do
   esac
 done
 
-if [[ -z $QUELLE ]]; then
+if [[ -z $QUELLE && -z $PACKAGELIST_PATH ]]; then
   read -p "Bitte das Quellverzeichnis eingeben: " QUELLE
 fi
 
