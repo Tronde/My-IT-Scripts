@@ -9,7 +9,11 @@
 # Autor:    Tronde (https://ubuntuusers.de/user/Tronde/)
 # Lizenz:   GPLv3 (http://www.gnu.de/documents/gpl.de.html)
 
-import urllib.request
+import re
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
-soup = BeautifulSoup(urllib.request.urlopen('https://wiki.ubuntuusers.de/Wiki/Vorlagen/Ausbauf%C3%A4hig/a/backlinks/'))
-print(soup.prettify())
+soup = BeautifulSoup(urlopen('https://wiki.ubuntuusers.de/Wiki/Vorlagen/Ausbauf%C3%A4hig/a/backlinks/'))
+div_tag = BeautifulSoup(str(soup.find_all(class_=re.compile("content_tabbar"))))
+link_list = []
+link_list = div_tag.ul.find_all("li")
+print(link_list)
