@@ -3,18 +3,47 @@
 #
 # Beschreibung:
 # Dieses Skript erstellt den Quelltext der ausbaufaehigen Wiki-Artikel
-# fuer den UWR.
+# fuer den UWR. Es muessen nur noch die Beschreibungen eingefuegt werden.
 #
-# Version:  0.1 (2016-05-22)
+# Version:  0.2 (2016-06-01)
 # Autor:    Tronde (https://ubuntuusers.de/user/Tronde/)
 # Lizenz:   GPLv3 (http://www.gnu.de/documents/gpl.de.html)
 
 import re
+import random
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 soup = BeautifulSoup(urlopen('https://wiki.ubuntuusers.de/Wiki/Vorlagen/Ausbauf%C3%A4hig/a/backlinks/'))
 div_tag = BeautifulSoup(str(soup.find_all(class_=re.compile("content_tabbar"))))
 link_list = []
-link_list = div_tag.ul.find_all("li")
-print(link_list)
-print(link_list[0])
+for link in div_tag.ul.find_all('a'):
+    link_list.append(link.text)
+
+rand_list = []
+num_to_select = 5
+rand_list = random.sample(link_list, num_to_select)
+
+# Erstellung Tabelle
+table = """
+{{{#!vorlage Tabelle
+<rowclass="kopf"; :>Artikel
+<:>Beschreibung
++++
+"""
+
+highlight = False
+
+for i in rand_list:
+    if highlight:
+        table += '<rowclass="highlight">[:' + i + ":]\n"
+        table += "\n"
+        table += "+++\n"
+    else:
+        table += "[:" + i + ":]\n"
+        table += "\n"
+        table += "+++\n"
+    highlight = not(highlight)
+
+table += "}}}"
+
+print(table)
