@@ -17,3 +17,4 @@ div_tag = BeautifulSoup(str(soup.find_all(class_=re.compile("content_tabbar"))))
 link_list = []
 link_list = div_tag.ul.find_all("li")
 print(link_list)
+print(link_list[0])
