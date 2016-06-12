@@ -5,7 +5,7 @@
 # Dieses Skript erstellt den Quelltext der ausbaufaehigen Wiki-Artikel
 # fuer den UWR. Es muessen nur noch die Beschreibungen eingefuegt werden.
 #
-# Version:  0.2 (2016-06-01)
+# Version:  0.3 (2016-06-12)
 # Autor:    Tronde (https://ubuntuusers.de/user/Tronde/)
 # Lizenz:   GPLv3 (http://www.gnu.de/documents/gpl.de.html)
 
