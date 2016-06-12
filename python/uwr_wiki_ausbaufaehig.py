@@ -36,11 +36,11 @@ highlight = False
 for i in rand_list:
     if highlight:
         table += '<rowclass="highlight">[:' + i + ":]\n"
-        table += "\n"
+        table += "asbaufähig\n"
         table += "+++\n"
     else:
         table += "[:" + i + ":]\n"
-        table += "\n"
+        table += "ausbaufähig\n"
         table += "+++\n"
     highlight = not(highlight)
 
