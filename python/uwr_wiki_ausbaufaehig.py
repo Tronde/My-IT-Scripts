@@ -5,7 +5,7 @@
 # Dieses Skript erstellt den Quelltext der ausbaufaehigen Wiki-Artikel
 # fuer den UWR. Es muessen nur noch die Beschreibungen eingefuegt werden.
 #
-# Version:  0.3 (2016-06-12)
+# Version:  0.4 (2016-06-14)
 # Autor:    Tronde (https://ubuntuusers.de/user/Tronde/)
 # Lizenz:   GPLv3 (http://www.gnu.de/documents/gpl.de.html)
 
@@ -28,20 +28,19 @@ table = """
 {{{#!vorlage Tabelle
 <rowclass="kopf"; :>Artikel
 <:>Beschreibung
-+++
 """
 
 highlight = False
 
 for i in rand_list:
     if highlight:
-        table += '<rowclass="highlight">[:' + i + ":]\n"
-        table += "asbaufähig\n"
         table += "+++\n"
+        table += '<rowclass="highlight">[:' + i + ":]\n"
+        table += "ausbaufähig\n"
     else:
+        table += "+++\n"
         table += "[:" + i + ":]\n"
         table += "ausbaufähig\n"
-        table += "+++\n"
     highlight = not(highlight)
 
 table += "}}}"
