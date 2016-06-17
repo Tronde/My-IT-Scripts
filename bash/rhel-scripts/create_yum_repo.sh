@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # Beschreibung: Skript zur Anlage eigener YUM-Repositories
-# Autor: Joerg Kastning <joerg(PUNKT)kastning(AET)uni-bielefeldde>
+# Autor: Joerg Kastning <joerg.kastning@uni-bielefel.de>
 
 # Variablen ###################################################################
-HOST="http://<FQDN>" # Adresse des Servers, welcher das Repository hostet.
-BASEDIR="/var/www/html/<VERZEICHNISNAME>/"
+HOST="http://rpm-repo.hrz.uni-bielefeld.de" # Adresse lokaler Spiegelserver
+BASEDIR="/var/www/html/local-rhel-7-repo/"
 REPONAME=""
 LOG="/var/log/create_yum_repo.log"
 
@@ -43,14 +43,14 @@ mkdir $BASEDIR$REPONAME
 createrepo --database $BASEDIR$REPONAME 
 REPOID=`echo $REPONAME | tr "[a-z]" "[A-Z]"`
 
-cat >> $BASEDIR/$REPONAME.repo << EOF
-[$REPOID]
-name= RHEL \$releasever - \$basearch (local)
-baseurl=$HOST/`basename $BASEDIR`/$REPONAME/
-enabled=1
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-EOF
+#cat >> $BASEDIR/$REPONAME.repo << EOF
+#[$REPOID]
+#name= RHEL \$releasever - \$basearch (local)
+#baseurl=$HOST/`basename $BASEDIR`/$REPONAME/
+#enabled=1
+#gpgcheck=1
+#gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+#EOF
 }
 
 # Hauptteil #######################################################

@@ -2,13 +2,13 @@
 #
 # Beschreibung: Skript zur Synchronisierung des RHEL-Repositories
 #               auf dem Spiegelserver
-# Autor: Joerg Kastning <joerg(Punkt)kastning(aet)uni-bielefeld.de>
+# Autor: Joerg Kastning <joerg.kastning@uni-bielefel.de>
 
 LOG="/var/log/do_reposync.log"
-REPOID=( )
-DOWNLOADPATH=" "
+REPOID=(rhel-7-server-rpms)
+DOWNLOADPATH="/var/www/html/local-rhel-7-repo"
 
-echo \# `date +%Y-%m-%d` - START REPOSYNC \# > $LOG
+echo \# `date +%Y-%m-%dT%H:%M` - START REPOSYNC \# > $LOG
 
 for REPO in "${REPOID[@]}"
   do
@@ -21,5 +21,5 @@ for REPO in "${REPOID[@]}"
     fi
 done
 
-echo \# `date +%Y-%m-%d` - END REPOSYNC \# >> $LOG
+echo \# `date +%Y-%m-%dT%H:%M` - END REPOSYNC \# >> $LOG
 exit 0
