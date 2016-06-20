@@ -15,6 +15,7 @@ usage() {
 	Erweiterung von JKA 2016-05-22
 
 	OPTIONS:
+	-c Optional: Gibt den vollstaendigen Pfad zur Konfigurationsdatei mit den Parametern zur CSR-Erzeugung an (z.B. "/var/tmp/test.cfg")
 	-f Gibt den FQDN an. Beispiel: "smtp-relay.uni-bielefeld.de"
 	-h Zeigt diese Nachricht an.
 	-p Gibt den Dateipraefix an. Beispiel: "smtp-relay"
@@ -22,16 +23,19 @@ EOF
 }
 
 # Hauptteil ################################################################
-while getopts .f:hp:. OPTION
+while getopts .c:f:hp:. OPTION
 do
 	case $OPTION in
-		f)
+		c)
+			CFG="${OPTARG}"
+			;;
+		p)
 			ZERTPREFIX="${OPTARG}"
 			;;
 		h)
 			usage
 			exit;;
-		p)
+		f)
 			ZERTCN="${OPTARG}"
 			;;
 		?)
@@ -70,8 +74,13 @@ if [ ! -f $PRIV ]; then
 	${OPENSSL} genrsa  -passout file:${ZERTPREFIX}_priv.passwd -aes256 -out ${PRIV} 2048
 fi
 # Request generieren
-${OPENSSL} req -batch -sha256 -new -key ${PRIV} -passin file:${ZERTPREFIX}_priv.passwd -out ${REQ} -subj "${S_DN}"
-chmod 600 ${REQ}
+if [[ -n $CFG ]]; then
+	${OPENSSL} req -batch -sha256 -new -key ${PRIV} -passin file:${ZERTPREFIX}_priv.passwd -out ${REQ} -config "${CFG}"
+	chmod 600 ${REQ}
+else
+	${OPENSSL} req -batch -sha256 -new -key ${PRIV} -passin file:${ZERTPREFIX}_priv.passwd -out ${REQ} -subj "${S_DN}"
+	chmod 600 ${REQ}
+fi
 
 # Request in Textform exportieren (nur zur manuellen Kontrolle)
 ${OPENSSL} req -text -verify -in ${REQ} > ${REQ}.txt
