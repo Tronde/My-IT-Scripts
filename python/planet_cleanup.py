@@ -43,7 +43,7 @@ table = """
 
 highlight = False
 
-for i in range(len(str_list)):
+for i in range(len(str_list)-1):
   if highlight:
     table += "+++\n"
     table += re.sub('<[^>]*>', '', str_list[i][1]) + "\n"
