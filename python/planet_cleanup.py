@@ -19,8 +19,7 @@
 import re
 from bs4 import BeautifulSoup
 
-#path = "/path/to/Blogs.html"
-path = "/home/jkastning/Downloads/Blogs.html"
+path = "/path/to/Blogs.html"
 
 soup = BeautifulSoup(open(path))
 blog_table = BeautifulSoup(str(soup.body.table.tbody.find_all('tr', class_='')))
