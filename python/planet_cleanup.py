@@ -19,8 +19,7 @@
 import re
 from bs4 import BeautifulSoup
 
-#path = "/path/to/Blogs.html"
-path = "/home/jkastning/Downloads/Blogs.html"
+path = "/path/to/Blogs.html"
 
 soup = BeautifulSoup(open(path))
 blog_table = BeautifulSoup(str(soup.body.table.tbody.find_all('tr', class_='')))
@@ -37,13 +36,9 @@ for i in range(len(list)):
 # Erstellung Tabelle
 table = """
 {{{#!vorlage Tabelle
-<-5 tablestyle="width: 95%;" rowclass="titel"> Angeschriebene Blogs
-+++
 <rowclass="kopf"; :>Blogname
 <:>Benutzer
 <:>Letzte Aktivität
-<:>Nachricht versendet
-<:>Antwort
 """
 
 highlight = False
@@ -51,18 +46,14 @@ highlight = False
 for i in range(len(str_list)-1):
   if highlight:
     table += "+++\n"
-    table += "[" + list[i].a.get('href') + " " + re.sub('<[^>]*>', '', str_list[i][1]) + "]\n"
+    table += re.sub('<[^>]*>', '', str_list[i][1]) + "\n"
     table += "[user:" + re.sub('<[^>]*>', '', str_list[i][2]) + ":]\n"
     table += re.sub('<[^>]*>', '', str_list[i][3]) + "\n"
-    table += "\n"
-    table += "\n"
   else:
     table += "+++\n"
-    table += "[" + list[i].a.get('href') + " " + re.sub('<[^>]*>', '', str_list[i][1]) + "]\n"
+    table += re.sub('<[^>]*>', '', str_list[i][1]) + "\n"
     table += "[user:" + re.sub('<[^>]*>', '', str_list[i][2]) + ":]\n"
     table += re.sub('<[^>]*>', '', str_list[i][3]) + "\n"
-    table += "\n"
-    table += "\n"
   highlight = not(highlight)
 
 table += "}}}"
