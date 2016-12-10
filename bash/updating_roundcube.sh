@@ -1,15 +1,17 @@
 #!/bin/bash
 #
 # Beschreibung: Skript zur Aktualisierung von Roundcube
+#               Das Skript wird als normaler Benutzer ausgefuehrt. Notwendige
+#               Kennwoerter werden zur Laufzeit abgefragt.
 # Autor: Tronde (E-Mail-Adresse: tronde(at)my-it-brain(Punkt)de)
-# Datum: 2016-02-23
+# Datum: 2016-12-11
 # Lizenz: GPLv3
 
 # Variablen
-INSTALL_PATH=" " # Pfad zur Roundcube-Installation
-RC_DB_NAME=" "
-PACKAGE_URL=" " # Download-URL der akutellen Roundcube-Version
-MYSQL_ROOT_USER=" "
+INSTALL_PATH="" # Pfad zur Roundcube-Installation
+RC_DB_NAME=""
+PACKAGE_URL="https://github.com/roundcube/roundcubemail/releases/download/1.2.3/roundcubemail-1.2.3.tar.gz" # Download-URL der akutellen Roundcube-Version
+MYSQL_ROOT_USER=""
 
 # Funktionen
 check()
