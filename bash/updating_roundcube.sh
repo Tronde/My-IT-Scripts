@@ -36,8 +36,8 @@ do_upgrade()
 	{
 		echo "Das Archiv mit der aktuellen Roundcube-Version wird heruntergeladen und entpackt."
 		wget $PACKAGE_URL
-		tar xf roundcubemail-*.tar.gz
-		cd `basename roundcubemail-*.tar.gz .tar.gz`
+		tar xf roundcubemail-*-complete.tar.gz
+		cd `basename roundcubemail-*.tar.gz -complete.tar.gz`
 		echo "Bitte geben Sie das sudo-Passwort des angemeldeten Benutzers ein, wenn Sie dazu aufgefordert werden. Folgen Sie den Anweisungen des Installationsscripts."
 		sudo ./bin/installto.sh $INSTALL_PATH
 	}
