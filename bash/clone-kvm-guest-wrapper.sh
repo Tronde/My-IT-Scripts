@@ -24,7 +24,7 @@ clone(){
 }
 
 sysprep(){
-  virt-sysprep --operations -ssh-userdir --hosname "${GUEST_NAME}" -d "${GUEST_NAME}"
+  virt-sysprep --operations -ssh-userdir --hostname "${GUEST_NAME}" -d "${GUEST_NAME}"
 }
 
 # main
