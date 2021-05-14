@@ -6,6 +6,7 @@
 # variables
 TEMPLATE_NAME=${1}
 GUEST_NAME=${2}
+URI="qemu:///system"
 
 # functions
 usage(){
@@ -20,14 +21,12 @@ EOF
 }
 
 clone(){
-  virt-clone --original "${TEMPLATE_NAME}" --name "${GUEST_NAME}" --auto-clone
+  virt-clone --connect "${URI}" --original "${TEMPLATE_NAME}" --name "${GUEST_NAME}" --auto-clone
 }
 
 sysprep(){
-  virt-sysprep --operations defaults,-ssh-userdir --hostname "${GUEST_NAME}" --firstboot-command 'dpkg-reconfigure openssh-server' --firstboot-command 'systemctl restart ssh' -d "${GUEST_NAME}"
+  virt-sysprep -c "${URI}" --operations defaults,-ssh-userdir --hostname "${GUEST_NAME}" --firstboot-command 'dpkg-reconfigure openssh-server' --firstboot-command 'systemctl restart ssh' -d "${GUEST_NAME}"
 }
 
 # main
-clone
-sysprep
-virsh start "${GUEST_NAME}"
+clone && sysprep && virsh -c "${URI}" start "${GUEST_NAME}"
