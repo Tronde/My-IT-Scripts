@@ -24,9 +24,10 @@ clone(){
 }
 
 sysprep(){
-  virt-sysprep --operations -ssh-userdir --hostname "${GUEST_NAME}" -d "${GUEST_NAME}"
+  virt-sysprep --operations defaults,-ssh-userdir --hostname "${GUEST_NAME}" --firstboot-command 'dpkg-reconfigure openssh-server' --firstboot-command 'systemctl restart ssh' -d "${GUEST_NAME}"
 }
 
 # main
 clone
 sysprep
+virsh start "${GUEST_NAME}"
