@@ -58,6 +58,7 @@ edit_sshd_config(){
 
 reload_sshd(){
   /usr/bin/systemctl reload sshd.service
+  /usr/bin/echo "Run '/usr/bin/systemctl reload sshd.service'...OK"
 }
 
 # main
@@ -79,4 +80,4 @@ then
 fi
 backup_sshd_config
 edit_sshd_config
-#reload_sshd
+reload_sshd
