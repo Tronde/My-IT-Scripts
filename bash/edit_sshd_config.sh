@@ -27,6 +27,7 @@ usage(){
     usage: $0 ARG1
 
     ARG1  Name of the sshd_config file to edit.
+    In case ARG1 is empty, /etc/ssh/sshd_config will be used as default.
 EOF
 }
 backup_sshd_config(){
@@ -43,11 +44,16 @@ edit_sshd_config(){
   for PARAM in ${param[@]}
   do
     /usr/bin/sed -i '/^'"${PARAM}"'/d' ${file}
+    /usr/bin/echo "All lines beginning with '${PARAM}' were deleted from ${file}."
   done
   /usr/bin/echo "${param[1]} no" >> ${file}
+  /usr/bin/echo "'${param[1]} no' was added to ${file}."
   /usr/bin/echo "${param[2]} yes" >> ${file}
+  /usr/bin/echo "'${param[2]} yes' was added to ${file}."
   /usr/bin/echo "${param[3]} .ssh/authorized_keys" >> ${file}
+  /usr/bin/echo "'${param[3]} .ssh/authorized_keys' was added to ${file}."
   /usr/bin/echo "${param[4]} no" >> ${file}
+  /usr/bin/echo "'${param[4]} no' was added to ${file}"
 }
 
 reload_sshd(){
@@ -55,10 +61,21 @@ reload_sshd(){
 }
 
 # main
+while getopts .h. OPTION
+do
+  case $OPTION in
+    h)
+      usage
+      exit;;
+    ?)
+      usage
+      exit;;
+  esac
+done
+
 if [ -z "${file}" ]
 then
-  usage
-  exit 1
+  file="/etc/ssh/sshd_config"
 fi
 backup_sshd_config
 edit_sshd_config
